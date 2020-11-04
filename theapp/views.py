@@ -9,10 +9,10 @@ from .models import myTask
 
 # # Create your views here.
 def home(request):
-    tasks = Task.objects.all()
+    tasks = myTask.objects.all()
 
     context = {'tasks':tasks}
-    return render(request,'list.html')
+    return render(request,'list.html',context)
 #     
 # @login_required(login_url='/accounts/login/')
 # def user_profile(request, username):
