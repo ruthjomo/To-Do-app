@@ -23,6 +23,19 @@ def home(request):
         hoods = Neighborhood.all_neighborhoods()
         return render(request, 'index.html', {"hoods": hoods})
 
+@login_required(login_url='/accounts/login/')
+def user_profile(request, username):
+    profile = User.objects.get(username=username)
+    try:
+        profile_info = Profile.get_profile(profile.id)
+    except:
+        profile_info = Profile.filter_by_id(profile.id)
+    businesses = Business.get_profile_businesses(profile.id)
+    title = f'@{profile.username}'
+    return render(request, 'profile.html', {'title': title, 'profile': profile, 'profile_info': profile_info, 'businesses': businesses})
+
+
+
 
 @login_required(login_url='/accounts/login/')
 def add_profile(request):
