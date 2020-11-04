@@ -40,4 +40,4 @@ def add_profile(request):
     return render(request, 'new_profile.html', {"form": form})
 
 
-@login_required(login_url='/accounts/login/')
+# @login_required(login_url='/accounts/login/')
