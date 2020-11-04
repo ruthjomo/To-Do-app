@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 # from django.contrib.auth.decorators import login_required
-# from .models import Profile
+from .models import myTask
 # from .forms import NewProfileForm
 # import datetime as dt
 # from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -9,7 +9,10 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 
 # # Create your views here.
 def home(request):
-     return render(request,'list.html')
+    tasks = Task.objects.all()
+
+    context = {'tasks':tasks}
+    return render(request,'list.html')
 #     
 # @login_required(login_url='/accounts/login/')
 # def user_profile(request, username):

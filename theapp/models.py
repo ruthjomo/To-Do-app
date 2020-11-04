@@ -4,7 +4,7 @@ from django.db import models
 # import datetime as dt
 
 # # Create your models here.
-class Post(models.Model):
+class myTask(models.Model):
     title = models.CharField(max_length=200)
     complete= models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
