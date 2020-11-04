@@ -25,42 +25,7 @@
 </head>
 
 <body>
-  <div class="container-fluid">
-    <h1 id="mainheading" style="text-align:center;" class="display-4"> MyHood</h1>
-    <h4>Don't see your hood ?
-      Register it <a style="color:info;" href="{% url 'add_hood'  %}">here</a>
-    </h4>
-    <div class="card-columns">
-      {% for hood in hoods%}
-
-      <div class="card border-white">
-
-
-        <div class="card-body" style="background-color:whitesmoke;">
-
-
-          <h4 id="text" class="card-title">Hood: {{hood.name }}</h4>
-          <h6 id="text" class="card-title">Location: {{hood.locality | upper}}</h6>
-
-          <h5 id="text" class="card-title">Residents: {{hood.occupants_count | upper}}</h5>
-
-
-         
-          <a href="{% url 'join_hood' hood.id  %}" class="btn btn-sm btn-info">Join</a>
-          
-
-        </div>
-      </div>
-      {% endfor %}
-
-    </div>
-
-
-
-
-
-
-  </div>
+  
 </body>
 
 </html>
