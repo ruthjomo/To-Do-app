@@ -4,10 +4,10 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.home, name='home'),
+    url(r'^$', views.index, name='index'),
     url('update_task/<str:pk>/', views.updatemyTask, name='update_task'),
-     url('delete/<str:pk>/', views.deleteTask, name='delete')
-    #    url(r'^user/(?P<username>\w+)', views.user_profile, name='user_profile'),
+    url('delete/<str:pk>/', views.deleteTask, name='delete'),
+    url(r'^user/(?P<username>\w+)', views.user_profile, name='user_profile'),
     
     
     

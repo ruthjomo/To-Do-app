@@ -1,7 +1,13 @@
-<p>Are you sure you want to delete "{{ item }}"?</p>
-<a href="{% url 'home'%}">Cancel</a>
+{%extends 'base.html'%}
+{% block content %}
+{{ block.super}}
 
-<form method="POST" action="">
+{% load staticfiles%}
+
+<p>Are you sure you want to delete "{{ item }}"?</p>
+<a href="{% url 'index'%}">Cancel</a>
+
+<form method="POST" action="index">
     {%  csrf_token %}
     <input type="submit" name="Confirm">
   

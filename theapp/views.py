@@ -7,7 +7,7 @@ import datetime as dt
 
 # # Create your views here.
 @login_required(login_url='/accounts/login/')
-def home(request):
+def index(request):
     tasks = myTask.objects.all()
     form = myTaskForm()
      
@@ -17,7 +17,7 @@ def home(request):
         if form.is_valid():
             form.save()
 
-    return redirect('/')
+    # return redirect('index')
     
     context = {'tasks':tasks}
     return render(request,'list.html',context)
@@ -33,7 +33,7 @@ def updatemyTask(request,pk):
         if form.is_valid():
             form.save()
 
-    return redirect('/')
+    # return redirect('index')
         
 
     context = {'form':form}
@@ -45,7 +45,7 @@ def deleteTask(request,pk):
 
     if request.method =='POST':
         item.delete()
-        return redirect('/')
+        # return redirect('index')
 
     context = {'item':item}
     return render(request,'delete_task.html',context)
@@ -73,7 +73,7 @@ def add_profile(request):
              profile = form.save(commit=False)
              profile.user = current_user
              profile.save()
-         return redirect('home')
+        #  return redirect('index')
 
     else:
          form = NewProfileForm()

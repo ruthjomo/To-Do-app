@@ -1,8 +1,9 @@
+{%extends 'base.html'%}
 
 
 <h1>TO-DO</h1>
 
-<form method="POST" action="/">
+<form method="POST" action="index">
   {%  csrf_token %}
     {{form}}
    <label>MyTask</label> <input placeholder="mytask" type="submit" name="Create myTask">
