@@ -1,3 +1,5 @@
+
+
 <h1>TO-DO</h1>
 
 <form method="POST" action="/">
@@ -10,7 +12,13 @@
 {% for task in tasks %}
    <div>
        <a href=" {% url ' update_task' task.id %}">Update</a>
-     <p>{{task}}</p>
+       <a href=" {% url ' delete_task' task.id %}">Delete</a>
+       
+       {% if task.complete == TRUE %}
+       <strike><p>{{task}}</p></strike>
+       {% else %}
+       <span>{{task}}</span>
+     {% endif%}
    </div>
 
 {% endfor %}

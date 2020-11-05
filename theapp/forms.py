@@ -9,6 +9,11 @@ class myTaskForm(forms.ModelForm):
         model = myTask
         fields = '__all__'
 
+class NewProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['user']
+
 
 
 
