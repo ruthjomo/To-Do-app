@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url('update_task/<str:pk>/', views.updatemyTask, name='update_task')
     #    url(r'^user/(?P<username>\w+)', views.user_profile, name='user_profile'),
     
     

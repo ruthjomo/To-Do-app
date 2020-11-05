@@ -22,6 +22,10 @@ def home(request):
     
     context = {'tasks':tasks}
     return render(request,'list.html',context)
+
+def updatemyTask(request,pk):
+    task = Task.objects.get(id=pk)
+    return render(request, 'update_task.html')
 #     
 # @login_required(login_url='/accounts/login/')
 # def user_profile(request, username):
