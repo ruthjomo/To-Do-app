@@ -25,7 +25,19 @@ def home(request):
 
 def updatemyTask(request,pk):
     task = Task.objects.get(id=pk)
-    return render(request, 'update_task.html')
+    
+    form = myTaskForm(instance=task)
+
+    if request.method =='POST':
+        form = myTaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+
+    return redirect('/')
+        
+
+    context = {'form':form}
+    return render(request, 'update_task.html',context)
 #     
 # @login_required(login_url='/accounts/login/')
 # def user_profile(request, username):
