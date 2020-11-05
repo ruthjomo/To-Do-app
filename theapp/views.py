@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 # from django.contrib.auth.decorators import login_required
 from .models import *
@@ -13,7 +13,7 @@ def home(request):
     form = myTaskForm()
      
 
-    if request.METHOD=='POST':
+    if request.method =='POST':
         form = myTaskForm(request.POST)
         if form.is_valid():
             form.save()
