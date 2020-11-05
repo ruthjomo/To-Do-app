@@ -11,6 +11,14 @@ from .forms import *
 def home(request):
     tasks = myTask.objects.all()
     form = myTaskForm()
+     
+
+    if request.METHOD=='POST':
+        form = myTaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    return redirect('/')
     
     context = {'tasks':tasks}
     return render(request,'list.html',context)
