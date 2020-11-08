@@ -6,34 +6,67 @@ from .forms import *
 import datetime as dt
 
 # # Create your views here.
+
+
 @login_required(login_url='/accounts/login/')
 def index(request):
-    tasks = myTask.objects.all()
-    form = myTaskForm()
-     
-
-    if request.method =='POST':
-        form = myTaskForm(request.POST)
-        if form.is_valid():
-            form.save()
-
-    # return redirect('index')
+    tasks = TaskList.objects.all() 
+    categories = Category.objects.all() 
     
-    context = {'tasks':tasks}
-    return render(request,'list.html',context)
+    if request.method == "POST": 
+        if "updateTask" in request.POST: 
+            title = request.POST["description"]
+            date = str(request.POST["date"]) 
+            category = request.POST["category_select"] 
+            content = title + " -- " + date + " " + category 
+            task = TaskList(title=title, content=content, due_date=date, category=Category.objects.get(name=category))
+            task.save()  
+            return redirect("/") 
+        if "deleteTask" in request.POST: 
+            checkedlist = request.POST["checkedbox"] 
+            for task_id in checkedlist:
+                task = TaskList.objects.get(id=int(task_id)) 
+                task.delete() 
+    return render(request, "index.html", {"tasks": tasks, "categories":categories})
+
+
+
 
 @login_required(login_url='/accounts/login/')
-def updatemyTask(request,pk):
-    task = Task.objects.get(id=pk)
+def profile(request):
+    tasks = TaskList.objects.all()
+    return render(request,'profile.html' ,{'tasks':tasks})
+
+
+@login_required(login_url='/accounts/login/')
+def update_profile(request):
+    update_user=UpdateUser(request.POST,instance=request.user)
+    update_profile=UpdateProfile(request.POST,request.FILES,instance=request.user.profile)
+    if update_user.is_valid() and update_profile.is_valid():
+        update_user.save()
+        update_profile.save()
+        
+        messages.success(request, 'Profile Updated Successfully')
+        return redirect('profile')
     
-    form = myTaskForm(instance=task)
+    else:
+        update_user=UpdateUser(instance=request.user)
+        update_profile=UpdateProfile(instance=request.user.profile)
+    return render(request, 'update_profile.html',{'update_user':update_user,'update_profile':update_profile})
+
+
+@login_required(login_url='/accounts/login/')
+def updateTask(request,pk):
+    task = TaskList.objects.get(id=pk)
+    
+    form = TaskForm(instance=task)
 
     if request.method =='POST':
-        form = myTaskForm(request.POST, instance=task)
+        form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
 
-    # return redirect('index')
+    return redirect('index')
         
 
     context = {'form':form}
@@ -41,13 +74,13 @@ def updatemyTask(request,pk):
 
 @login_required(login_url='/accounts/login/')
 def deleteTask(request,pk):
-    item = Task.objects.get(id=pk)
+    tasks = TaskList.objects.get(id=pk)
 
     if request.method =='POST':
         item.delete()
-        # return redirect('index')
+        return redirect('index')
 
-    context = {'item':item}
+    context = {'tasks':tasks}
     return render(request,'delete_task.html',context)
     
 @login_required(login_url='/accounts/login/')
@@ -64,20 +97,3 @@ def user_profile(request, username):
 
 
 
-@login_required(login_url='/accounts/login/')
-def add_profile(request):
-    current_user = request.user
-    if request.method == 'POST':
-         form = NewProfileForm(request.POST, request.FILES)
-         if form.is_valid():
-             profile = form.save(commit=False)
-             profile.user = current_user
-             profile.save()
-        #  return redirect('index')
-
-    else:
-         form = NewProfileForm()
-         return render(request, 'new_profile.html', {"form": form})
-
-
-# # @login_required(login_url='/accounts/login/')

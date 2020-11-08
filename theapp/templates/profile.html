@@ -1,68 +1,51 @@
-{%extends 'base.html'%}
-{% block content %}
-{{ block.super}}
-{% load bootstrap3 %}
-{% load staticfiles%}
+{% load bootstrap3 %} 
+{% load static %}
+{% block title%}
+<!-- {{user.username}} -->
+{% endblock%}
 
 
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
-<br>
-<br>
-<div class="container" style="padding-left: 30%;">
-
-  <div class="row">
-
-    <div class="col-md-12">
-
-      <div class="card border-secondary">
-        <div class="card-footer">
-
-          <img class="rounded-circle img-responsive" width="170" height="170" src="{{profile_info.avatar.url}}" size="">
-          <br>
-
-
-          <br>
-
-          <p id="text" style="width:100%; padding-left:6px;">{{profile_info.user | upper}}</p>
-
-
-          <div style="width:100%; padding-left:20px;padding-top:10px;" class="row">
-
-            <p id="text" style="width:100%; padding-left:6px;">{{task | length }} task</p>
-            <br>
-            <p id="text" style="margin-top:0px;">{{profile_info.bio | safe}}</p>
-
-            <p id="text" style="margin-top:0px;">{{profile_info.contact | safe}}</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- <div class="col-lg-8 col-md-10 mx-auto">
-      <div class="card-columns ">
-        {% for business in businesses %}
-        <div class="card">
-          <div class="card-body" style="background-color:#eceff1;">
-            <h5>{{business.name | upper}}</h5>
-            <h5>{{business.description | safe}}</h5>
-            <p>{{business.email }}</p>
-            <p>Location: {{business.business_hood.name}}</p>
-          </div>
-        </div>
-        {% empty %}
-        <div class="row">
-          <h4>There are no businesses by {{user.username}}
-            Register one <a style="color:#4fc3f7;" href="{% url 'add_business'  %}">here</a>
-          </h4>
-        </div> -->
-        <!-- {% endfor %} -->
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
+{% block styles %}
+        {% bootstrap_css %}
+        <link rel="stylesheet" href="{%static 'css/index.css'%}"  >
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins'>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
+
+
+{% block content%}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 col-lg-2"></div>
+        <div class="col-md-8 col-lg-8 col-sm-10">
+            <div class="card  mt-3">
+               
+                <div class="container-fluid" >
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-xs-12 ml-2 mt-2 ">
+                            <img src="{{user.profile.image.url}}" class="img-circle rounded-circle image-fluid" alt="..." style="width: 220px; height: 220px;">
+                        </div>
+                    
+                        <div class="col-lg-6 col-md-6 col-xs-12 mb-2">
+                            <h2 class="card-title">{{user.username}}</h2>
+                            <p class="card-text">Email Adress: {{user.email}}</p>
+                            
+                            {% if user.profile.contact%}
+                            <p class="card-text">Contact Me: {{user.profile.contact}}</p>
+                            {%endif%} 
+                            {% if user.profile.bio%}
+                            <p class="card-text">About Me: {{user.profile.bio}}</p>
+                            {%endif%} 
+                
+                            <a href="{% url  'update_profile' %}" class="btn btn-info btn-sm">Update Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-lg-2"></div>
+    </div>
+   
+</div>
+{% endblock%}

@@ -1,21 +1,37 @@
 from django.db import models
 from django.contrib.auth.models import User
-from tinymce.models import HTMLField
 import datetime as dt
+from django.utils import timezone
 
 # # Create your models here.
-class myTask(models.Model):
-        title = models.CharField(max_length=200)
-        complete= models.BooleanField(default=False)
-        created = models.DateTimeField(auto_now_add=True)
 
-        def __str__(self):
-            return self.title
+class Category(models.Model): # The Category table name that inherits models.Model
+    name = models.CharField(max_length=100) 
+    class Meta:
+        verbose_name = ("Category")
+        verbose_name_plural = ("Categories")
+    def __str__(self):
+        return self.name 
     
+
+class TaskList(models.Model): 
+#     task =models.CharField(max_length=250)
+    title = models.CharField(max_length=250) 
+    content = models.TextField(blank=True) 
+    created = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) 
+    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) 
+    category = models.ForeignKey(Category, default="general") 
+    class Meta:
+        ordering = ["-created"] 
+    def __str__(self):
+        return self.title #name to be shown when called
+
+
 class Profile(models.Model):
-        contact = HTMLField()
+        contact = models.TextField
         email = models.EmailField(max_length=70, blank=True)
         user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+        bio=models.TextField(blank=True)
         '''
         this is added to ensure the linter has no errors saying class has no objects member in VS Code IDE
         '''

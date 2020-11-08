@@ -3,10 +3,10 @@ from django import forms
 from .models import *
 
 
-class myTaskForm(forms.ModelForm):
+class TaskForm(forms.ModelForm):
 
     class Meta:
-        model = myTask
+        model = TaskList
         fields = '__all__'
 
 class NewProfileForm(forms.ModelForm):
